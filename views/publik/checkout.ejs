@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Lumière</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { blushBase: '#FCF9F9', dustyPink: '#F2E8E9', softMauve: '#E8DFE0', darkPlum: '#4A3C3D', roseWood: '#B89C9D' }, fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"Poppins"', 'sans-serif'] } } }
+        }
+    </script>
+    <style>.glass-nav{background:rgba(252,249,249,0.85);backdrop-filter:blur(12px)}</style>
+</head>
+<body class="font-sans bg-blushBase text-darkPlum antialiased">
+
+    <nav class="fixed w-full z-[60] glass-nav border-b border-roseWood/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
+            <a href="/" class="font-serif text-2xl font-semibold tracking-tighter text-darkPlum">LUMIÈRE</a>
+            <div class="flex items-center gap-3 text-xs text-gray-400">
+                <span class="text-roseWood font-medium">Keranjang</span>
+                <span>→</span>
+                <span class="text-darkPlum font-medium">Checkout</span>
+                <span>→</span>
+                <span>Konfirmasi</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-20 max-w-7xl mx-auto px-6 py-16">
+        <h1 class="font-serif text-4xl text-darkPlum mb-12">Checkout</h1>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <form action="/checkout" method="POST" class="lg:col-span-2 space-y-6">
+
+                <!-- DATA PENERIMA -->
+                <div class="bg-white p-8 border border-softMauve">
+                    <h3 class="font-serif text-xl mb-6">Data Penerima</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">Nama Lengkap *</label>
+                            <input type="text" name="namaPembeli" required placeholder="Nama lengkap"
+                                class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">Email *</label>
+                            <input type="email" name="email" required placeholder="email@contoh.com"
+                                class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">No. WhatsApp *</label>
+                            <input type="text" name="telepon" required placeholder="08xx-xxxx-xxxx"
+                                class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">Alamat Lengkap *</label>
+                            <textarea name="alamat" rows="3" required placeholder="Jalan, nomor rumah, RT/RW, kelurahan"
+                                class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">Kota *</label>
+                            <input type="text" name="kota" required placeholder="Kota/Kabupaten"
+                                class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">Provinsi *</label>
+                            <input type="text" name="provinsi" required placeholder="Provinsi"
+                                class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">Kode Pos *</label>
+                            <input type="text" name="kodePos" required placeholder="40xxx"
+                                class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PENGIRIMAN -->
+                <div class="bg-white p-8 border border-softMauve">
+                    <h3 class="font-serif text-xl mb-6">Pengiriman & Pembayaran</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">Kurir</label>
+                            <select name="kurirPengiriman" class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase">
+                                <% ['JNE','J&T','SiCepat','AnterAja','Pos Indonesia'].forEach(k => { %>
+                                <option value="<%= k %>"><%= k %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">Ongkos Kirim (Rp)</label>
+                            <input type="number" name="ongkir" value="0" min="0"
+                                class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase">
+                            <p class="text-xs text-gray-400 mt-1">*Hubungi WA untuk cek ongkir</p>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-3">Metode Pembayaran</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                <% ['Transfer BCA','Transfer BRI','Transfer BNI','QRIS','COD'].forEach((m, i) => { %>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="metodePembayaran" value="<%= m %>" class="hidden peer" <%= i===0?'checked':'' %>>
+                                    <span class="block border border-softMauve px-4 py-3 text-xs text-center peer-checked:border-darkPlum peer-checked:bg-darkPlum peer-checked:text-white transition">
+                                        <%= m %>
+                                    </span>
+                                </label>
+                                <% }) %>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold mb-2">Catatan (opsional)</label>
+                            <textarea name="catatan" rows="2" placeholder="Warna khusus, permintaan lain..."
+                                class="w-full border border-softMauve px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition bg-blushBase"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-darkPlum text-white py-5 uppercase tracking-[0.2em] text-[11px] font-medium hover:bg-roseWood transition-all duration-500">
+                    Buat Pesanan →
+                </button>
+            </form>
+
+            <!-- SUMMARY -->
+            <div>
+                <div class="bg-white p-8 border border-softMauve sticky top-28">
+                    <h3 class="font-serif text-xl mb-6">Pesanan Kamu</h3>
+                    <% keranjang.forEach(item => { %>
+                    <div class="flex gap-4 mb-4 pb-4 border-b border-softMauve/50">
+                        <div class="w-14 h-14 bg-dustyPink flex-shrink-0 overflow-hidden">
+                            <% if (item.foto) { %>
+                            <img src="<%= item.foto %>" class="w-full h-full object-cover">
+                            <% } %>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium"><%= item.namaProduk %></p>
+                            <p class="text-xs text-gray-400"><%= item.warna %> · x<%= item.jumlah %></p>
+                            <p class="text-roseWood text-sm mt-1">Rp <%= item.subtotal.toLocaleString('id-ID') %></p>
+                        </div>
+                    </div>
+                    <% }) %>
+                    <div class="flex justify-between font-medium mt-4 pt-2">
+                        <span>Total Produk</span>
+                        <span class="text-roseWood font-serif">Rp <%= total.toLocaleString('id-ID') %></span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2">+ Ongkir sesuai input</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

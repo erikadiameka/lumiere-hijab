@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Pesanan - Lumière Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { blushBase: '#FCF9F9', dustyPink: '#F2E8E9', softMauve: '#E8DFE0', darkPlum: '#4A3C3D', roseWood: '#B89C9D' }, fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"Poppins"', 'sans-serif'] } } }
+        }
+    </script>
+</head>
+<body class="font-sans bg-gray-50 text-darkPlum">
+
+<div class="flex min-h-screen">
+    <aside class="w-64 bg-darkPlum text-white fixed h-full flex flex-col">
+        <div class="p-8 border-b border-white/10">
+            <h1 class="font-serif text-2xl text-roseWood">LUMIÈRE</h1>
+            <p class="text-white/40 text-[10px] uppercase tracking-widest mt-1">Admin Panel</p>
+        </div>
+        <nav class="flex-1 p-4 mt-4">
+            <ul class="space-y-1">
+                <li><a href="/admin" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition text-sm">📊 Dashboard</a></li>
+                <li><a href="/admin/produk" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition text-sm">👗 Produk</a></li>
+                <li><a href="/admin/pesanan" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-roseWood/20 text-white font-medium text-sm">📦 Pesanan</a></li>
+                <li><a href="/admin/testimoni" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition text-sm">⭐ Testimoni</a></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-white/10">
+            <a href="/" target="_blank" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition text-sm">🌐 Lihat Website</a>
+            <a href="/logout" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-500/20 text-white/70 hover:text-red-300 transition text-sm mt-1">🚪 Logout</a>
+        </div>
+    </aside>
+
+    <main class="ml-64 flex-1 p-8">
+        <div class="flex items-center gap-4 mb-8">
+            <a href="/admin/pesanan" class="text-roseWood text-sm hover:underline">← Kembali</a>
+            <h2 class="font-serif text-3xl text-darkPlum">Detail Pesanan</h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- KIRI -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- ITEM PESANAN -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-5 text-sm uppercase tracking-widest text-gray-400">Item Pesanan</h3>
+                    <div class="space-y-4">
+                        <% pesanan.items.forEach(item => { %>
+                        <div class="flex justify-between items-center py-3 border-b border-gray-50">
+                            <div>
+                                <p class="font-medium text-sm"><%= item.namaProduk %></p>
+                                <p class="text-xs text-gray-400">Warna: <%= item.warna %> | Qty: <%= item.jumlah %></p>
+                            </div>
+                            <p class="text-sm font-medium text-roseWood">Rp <%= item.subtotal.toLocaleString('id-ID') %></p>
+                        </div>
+                        <% }) %>
+                        <div class="flex justify-between pt-2">
+                            <span class="text-sm text-gray-500">Ongkos Kirim (<%= pesanan.kurirPengiriman %>)</span>
+                            <span class="text-sm">Rp <%= pesanan.ongkir.toLocaleString('id-ID') %></span>
+                        </div>
+                        <div class="flex justify-between pt-2 border-t border-gray-100 font-bold">
+                            <span>Total Bayar</span>
+                            <span class="text-roseWood text-lg">Rp <%= pesanan.totalBayar.toLocaleString('id-ID') %></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DATA PEMBELI -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-5 text-sm uppercase tracking-widest text-gray-400">Data Pembeli</h3>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div><p class="text-gray-400 text-xs mb-1">Nama</p><p class="font-medium"><%= pesanan.namaPembeli %></p></div>
+                        <div><p class="text-gray-400 text-xs mb-1">Email</p><p><%= pesanan.email %></p></div>
+                        <div><p class="text-gray-400 text-xs mb-1">Telepon</p><p><%= pesanan.telepon %></p></div>
+                        <div><p class="text-gray-400 text-xs mb-1">Kota</p><p><%= pesanan.kota %>, <%= pesanan.provinsi %></p></div>
+                        <div class="col-span-2"><p class="text-gray-400 text-xs mb-1">Alamat</p><p><%= pesanan.alamat %>, <%= pesanan.kodePos %></p></div>
+                        <% if (pesanan.catatan) { %>
+                        <div class="col-span-2"><p class="text-gray-400 text-xs mb-1">Catatan</p><p class="italic"><%= pesanan.catatan %></p></div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KANAN - UPDATE STATUS -->
+            <div class="space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-5 text-sm uppercase tracking-widest text-gray-400">Info Pesanan</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Tanggal</span>
+                            <span><%= new Date(pesanan.createdAt).toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'}) %></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Pembayaran</span>
+                            <span><%= pesanan.metodePembayaran %></span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">Kurir</span>
+                            <span><%= pesanan.kurirPengiriman %></span>
+                        </div>
+                        <% if (pesanan.nomorResi) { %>
+                        <div class="flex justify-between">
+                            <span class="text-gray-400">No. Resi</span>
+                            <span class="font-medium"><%= pesanan.nomorResi %></span>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-5 text-sm uppercase tracking-widest text-gray-400">Update Status</h3>
+                    <form action="/admin/pesanan/update/<%= pesanan._id %>" method="POST" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Status Pesanan</label>
+                            <select name="status" class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition">
+                                <% ['Menunggu Pembayaran','Pembayaran Dikonfirmasi','Diproses','Dikirim','Selesai','Dibatalkan'].forEach(s => { %>
+                                <option value="<%= s %>" <%= pesanan.status === s ? 'selected' : '' %>><%= s %></option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Nomor Resi</label>
+                            <input type="text" name="nomorResi" value="<%= pesanan.nomorResi %>" placeholder="Isi jika sudah dikirim"
+                                class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition">
+                        </div>
+                        <button type="submit" class="w-full bg-darkPlum text-white py-3 rounded-lg text-sm font-medium hover:bg-roseWood transition">
+                            Simpan Update
+                        </button>
+                    </form>
+                </div>
+
+                <a href="https://wa.me/<%= pesanan.telepon.replace(/[^0-9]/g,'') %>" target="_blank"
+                    class="flex items-center justify-center gap-2 w-full bg-[#25D366] text-white py-3 rounded-lg text-sm font-medium hover:opacity-90 transition">
+                    💬 Hubungi via WhatsApp
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+
+</body>
+</html>

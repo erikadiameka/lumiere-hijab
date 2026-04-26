@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - Lumière</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { blushBase: '#FCF9F9', dustyPink: '#F2E8E9', softMauve: '#E8DFE0', darkPlum: '#4A3C3D', roseWood: '#B89C9D' }, fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"Poppins"', 'sans-serif'] } } }
+        }
+    </script>
+    <style>.glass-nav{background:rgba(252,249,249,0.85);backdrop-filter:blur(12px)}</style>
+</head>
+<body class="font-sans bg-blushBase text-darkPlum antialiased">
+
+    <nav class="fixed w-full z-[60] glass-nav border-b border-roseWood/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
+            <a href="/" class="font-serif text-2xl font-semibold tracking-tighter">LUMIÈRE</a>
+            <div class="hidden lg:flex space-x-10">
+                <a href="/katalog" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition">Shop All</a>
+                <a href="/tentang" class="text-[11px] uppercase tracking-[0.2em] font-medium text-roseWood">Our Story</a>
+                <a href="/kontak" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition">Kontak</a>
+            </div>
+            <a href="/keranjang" class="hover:text-roseWood transition">🛒</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="pt-20 min-h-[50vh] bg-dustyPink/40 flex items-center">
+        <div class="max-w-7xl mx-auto px-6 py-20">
+            <span class="text-[10px] uppercase tracking-[0.4em] text-roseWood font-semibold">Our Story</span>
+            <h1 class="font-serif text-6xl text-darkPlum mt-3 leading-tight">Tentang <br><span class="italic text-roseWood">Lumière</span></h1>
+        </div>
+    </div>
+
+    <!-- KONTEN -->
+    <div class="max-w-7xl mx-auto px-6 py-24">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-24">
+            <div class="aspect-square overflow-hidden">
+    <img src="https://www.shutterstock.com/image-photo/medium-studio-shot-beautiful-young-600nw-2696448949.jpg" 
+        class="w-full h-full object-cover">
+</div>
+            <div>
+                <span class="text-[10px] uppercase tracking-[0.4em] text-roseWood font-semibold">Kisah Kami</span>
+                <h2 class="font-serif text-4xl text-darkPlum mt-3 mb-6">Keanggunan dalam Setiap Helai</h2>
+                <p class="text-gray-500 leading-relaxed font-light mb-4">
+                    Lumière lahir dari kecintaan mendalam terhadap fashion muslimah yang elegan dan berkelas. Berdiri sejak 2020 di Bandung, kami hadir untuk memenuhi kebutuhan wanita modern yang menginginkan tampilan sempurna tanpa mengorbankan kenyamanan.
+                </p>
+                <p class="text-gray-500 leading-relaxed font-light">
+                    Setiap produk kami dipilih dengan teliti dari bahan-bahan premium dan didesain oleh tim kreatif berpengalaman. Kepuasan pelanggan adalah nafas kami setiap harinya.
+                </p>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+            <% [
+                { angka: '5000+', label: 'Pelanggan Puas' },
+                { angka: '100+', label: 'Koleksi Tersedia' },
+                { angka: '4.9', label: 'Rating Rata-rata' }
+            ].forEach(s => { %>
+            <div class="text-center p-10 border border-softMauve">
+                <p class="font-serif text-5xl text-roseWood mb-3"><%= s.angka %></p>
+                <p class="text-[10px] uppercase tracking-widest text-gray-400"><%= s.label %></p>
+            </div>
+            <% }) %>
+        </div>
+
+        <!-- VALUES -->
+        <div class="text-center mb-16">
+            <h2 class="font-serif text-4xl text-darkPlum mb-4">Nilai Kami</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <% [
+                { icon: '🌟', judul: 'Kualitas Premium', deskripsi: 'Bahan terbaik dipilih langsung dari produsen terpercaya untuk memberikan kenyamanan maksimal.' },
+                { icon: '💚', judul: 'Sustainable Fashion', deskripsi: 'Kami berkomitmen pada fashion yang bertanggung jawab terhadap lingkungan dan masyarakat.' },
+                { icon: '✨', judul: 'Desain Eksklusif', deskripsi: 'Setiap koleksi dirancang khusus untuk menonjolkan kecantikan dan keanggunan wanita muslimah.' }
+            ].forEach(v => { %>
+            <div class="p-8 bg-white border border-softMauve/50 text-center">
+                <div class="text-4xl mb-4"><%= v.icon %></div>
+                <h3 class="font-serif text-xl mb-3"><%= v.judul %></h3>
+                <p class="text-gray-400 text-sm leading-relaxed font-light"><%= v.deskripsi %></p>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-darkPlum text-white py-24 text-center">
+        <h2 class="font-serif text-4xl mb-4">Temukan Koleksi Kami</h2>
+        <p class="text-softMauve/70 mb-8 font-light">Jelajahi ratusan pilihan kerudung premium untuk tampilan terbaik Anda</p>
+        <a href="/katalog" class="bg-roseWood text-white px-12 py-4 uppercase tracking-[0.2em] text-[11px] font-medium hover:bg-white hover:text-darkPlum transition-all duration-500">
+            Shop Now
+        </a>
+    </div>
+
+    <footer class="bg-darkPlum text-blushBase pt-8 pb-8 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-[10px] uppercase tracking-widest text-softMauve/40">&copy; 2025 Lumière Hijab Indonesia. Crafted for Elegance.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

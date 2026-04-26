@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang - Lumière</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { blushBase: '#FCF9F9', dustyPink: '#F2E8E9', softMauve: '#E8DFE0', darkPlum: '#4A3C3D', roseWood: '#B89C9D' }, fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"Poppins"', 'sans-serif'] } } }
+        }
+    </script>
+    <style>.glass-nav{background:rgba(252,249,249,0.85);backdrop-filter:blur(12px)}</style>
+</head>
+<body class="font-sans bg-blushBase text-darkPlum antialiased">
+
+    <nav class="fixed w-full z-[60] glass-nav border-b border-roseWood/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
+            <a href="/" class="font-serif text-2xl font-semibold tracking-tighter text-darkPlum">LUMIÈRE</a>
+            <div class="hidden lg:flex space-x-10">
+                <a href="/katalog" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition">Shop All</a>
+                <a href="/tentang" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition">Our Story</a>
+                <a href="/kontak" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition">Kontak</a>
+            </div>
+            <a href="/keranjang" class="text-roseWood"><i class="lucide-shopping-bag w-5 h-5"></i></a>
+        </div>
+    </nav>
+
+    <div class="pt-20 max-w-7xl mx-auto px-6 py-16">
+        <h1 class="font-serif text-4xl text-darkPlum mb-12">Keranjang Belanja</h1>
+
+        <% if (keranjang.length === 0) { %>
+        <div class="text-center py-24">
+            <p class="font-serif text-3xl text-gray-200 mb-4">Keranjang kosong</p>
+            <p class="text-gray-400 mb-8 font-light">Belum ada produk yang ditambahkan</p>
+            <a href="/katalog" class="bg-darkPlum text-white px-12 py-4 uppercase tracking-[0.2em] text-[11px] font-medium hover:bg-roseWood transition-all duration-500">
+                Mulai Belanja
+            </a>
+        </div>
+        <% } else { %>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- ITEMS -->
+            <div class="lg:col-span-2 space-y-6">
+                <% keranjang.forEach((item, i) => { %>
+                <div class="flex gap-6 pb-6 border-b border-softMauve">
+                    <div class="w-24 h-28 bg-dustyPink flex-shrink-0 overflow-hidden">
+                        <% if (item.foto) { %>
+                        <img src="<%= item.foto %>" class="w-full h-full object-cover">
+                        <% } %>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-medium mb-1"><%= item.namaProduk %></h3>
+                        <p class="text-xs text-gray-400 uppercase tracking-widest mb-3">Warna: <%= item.warna %> · Qty: <%= item.jumlah %></p>
+                        <p class="text-roseWood font-medium">Rp <%= item.subtotal.toLocaleString('id-ID') %></p>
+                    </div>
+                    <form action="/keranjang/hapus" method="POST">
+                        <input type="hidden" name="index" value="<%= i %>">
+                        <button type="submit" class="text-gray-300 hover:text-red-400 transition text-sm">✕</button>
+                    </form>
+                </div>
+                <% }) %>
+
+                <a href="/katalog" class="inline-block text-[11px] uppercase tracking-widest text-roseWood border-b border-roseWood pb-1 hover:text-darkPlum hover:border-darkPlum transition mt-4">
+                    ← Lanjut Belanja
+                </a>
+            </div>
+
+            <!-- SUMMARY -->
+            <div>
+                <div class="bg-white p-8 border border-softMauve">
+                    <h3 class="font-serif text-xl mb-6">Ringkasan Pesanan</h3>
+                    <% keranjang.forEach(item => { %>
+                    <div class="flex justify-between text-sm mb-3 text-gray-500">
+                        <span><%= item.namaProduk %> x<%= item.jumlah %></span>
+                        <span>Rp <%= item.subtotal.toLocaleString('id-ID') %></span>
+                    </div>
+                    <% }) %>
+                    <div class="border-t border-softMauve pt-4 mt-4 flex justify-between font-medium">
+                        <span>Subtotal</span>
+                        <span class="text-roseWood font-serif text-lg">Rp <%= total.toLocaleString('id-ID') %></span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2 mb-6">Ongkos kirim dihitung saat checkout</p>
+                    <a href="/checkout" class="block w-full bg-darkPlum text-white text-center py-4 uppercase tracking-[0.2em] text-[11px] font-medium hover:bg-roseWood transition-all duration-500">
+                        Lanjut Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+    <footer class="bg-darkPlum text-blushBase pt-16 pb-8 mt-16">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h1 class="font-serif text-3xl mb-4 tracking-tighter">LUMIÈRE</h1>
+            <p class="text-[10px] uppercase tracking-widest text-softMauve/40">&copy; 2025 Lumière Hijab Indonesia</p>
+        </div>
+    </footer>
+
+</body>
+</html>

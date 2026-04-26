@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak - Lumière</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { blushBase: '#FCF9F9', dustyPink: '#F2E8E9', softMauve: '#E8DFE0', darkPlum: '#4A3C3D', roseWood: '#B89C9D' }, fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"Poppins"', 'sans-serif'] } } }
+        }
+    </script>
+    <style>.glass-nav{background:rgba(252,249,249,0.85);backdrop-filter:blur(12px)}</style>
+</head>
+<body class="font-sans bg-blushBase text-darkPlum antialiased">
+
+    <nav class="fixed w-full z-[60] glass-nav border-b border-roseWood/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
+            <a href="/" class="font-serif text-2xl font-semibold tracking-tighter">LUMIÈRE</a>
+            <div class="hidden lg:flex space-x-10">
+                <a href="/katalog" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition">Shop All</a>
+                <a href="/tentang" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition">Our Story</a>
+                <a href="/kontak" class="text-[11px] uppercase tracking-[0.2em] font-medium text-roseWood">Kontak</a>
+            </div>
+            <a href="/keranjang" class="hover:text-roseWood transition">🛒</a>
+        </div>
+    </nav>
+
+    <div class="pt-20 bg-dustyPink/30">
+        <div class="max-w-7xl mx-auto px-6 py-16 text-center">
+            <span class="text-[10px] uppercase tracking-[0.4em] text-roseWood font-semibold">Hubungi Kami</span>
+            <h1 class="font-serif text-5xl text-darkPlum mt-3">Kontak & FAQ</h1>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 py-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+            <!-- KONTAK INFO -->
+            <div>
+                <h2 class="font-serif text-3xl mb-8">Hubungi Kami</h2>
+                <div class="space-y-6">
+                    <% [
+                        { icon: '📱', judul: 'WhatsApp', isi: '0812-3456-7890', link: 'https://wa.me/6281234567890' },
+                        { icon: '📧', judul: 'Email', isi: 'lumiere@email.com', link: 'mailto:lumiere@email.com' },
+                        { icon: '📍', judul: 'Lokasi', isi: 'Bandung, Jawa Barat, Indonesia', link: null },
+                        { icon: '🕐', judul: 'Jam Operasional', isi: 'Senin – Sabtu: 08.00 – 20.00 WIB', link: null }
+                    ].forEach(k => { %>
+                    <div class="flex gap-5 p-6 bg-white border border-softMauve/50">
+                        <span class="text-2xl"><%= k.icon %></span>
+                        <div>
+                            <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-1"><%= k.judul %></p>
+                            <% if (k.link) { %>
+                            <a href="<%= k.link %>" target="_blank" class="font-medium text-roseWood hover:underline"><%= k.isi %></a>
+                            <% } else { %>
+                            <p class="font-medium"><%= k.isi %></p>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+
+                <a href="https://wa.me/6281234567890" target="_blank"
+                    class="mt-8 flex items-center justify-center gap-3 bg-[#25D366] text-white px-8 py-4 uppercase tracking-[0.2em] text-[11px] font-medium hover:opacity-90 transition w-full">
+                    💬 Chat via WhatsApp
+                </a>
+            </div>
+
+            <!-- FAQ -->
+            <div>
+                <h2 class="font-serif text-3xl mb-8">FAQ</h2>
+                <div class="space-y-4">
+                    <% [
+                        { q: 'Berapa lama pengiriman?', a: 'Estimasi 2-5 hari kerja tergantung lokasi dan kurir yang dipilih.' },
+                        { q: 'Apakah bisa COD?', a: 'COD tersedia untuk area Bandung dan sekitarnya. Hubungi kami untuk konfirmasi.' },
+                        { q: 'Bagaimana cara return barang?', a: 'Hubungi kami via WhatsApp dalam 2x24 jam setelah barang diterima dengan foto kondisi barang.' },
+                        { q: 'Apakah ada diskon member?', a: 'Ya! Pelanggan setia mendapat akses promo eksklusif. Follow Instagram kami untuk update terbaru.' },
+                        { q: 'Bahan apa yang digunakan?', a: 'Kami menggunakan bahan premium seperti voile, ceruti, satin, dan maxmara yang nyaman dipakai seharian.' },
+                        { q: 'Apakah produk ready stock?', a: 'Sebagian besar produk ready stock. Cek stok di halaman produk sebelum memesan.' }
+                    ].forEach(f => { %>
+                    <div x-data="{ open: false }" class="border border-softMauve bg-white">
+                        <button @click="open = !open" class="w-full flex justify-between items-center px-6 py-4 text-left">
+                            <span class="font-medium text-sm"><%= f.q %></span>
+                            <span x-text="open ? '−' : '+'" class="text-roseWood font-bold"></span>
+                        </button>
+                        <div x-show="open" x-cloak class="px-6 pb-4">
+                            <p class="text-gray-500 text-sm leading-relaxed font-light"><%= f.a %></p>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-darkPlum text-blushBase pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h1 class="font-serif text-3xl mb-4 tracking-tighter">LUMIÈRE</h1>
+            <div class="flex justify-center gap-8 text-sm text-softMauve/70 mb-8">
+                <a href="/katalog" class="hover:text-white transition">Katalog</a>
+                <a href="/tentang" class="hover:text-white transition">Tentang</a>
+                <a href="/keranjang" class="hover:text-white transition">Keranjang</a>
+            </div>
+            <p class="text-[10px] uppercase tracking-widest text-softMauve/40">&copy; 2025 Lumière Hijab Indonesia</p>
+        </div>
+    </footer>
+
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>[x-cloak]{display:none!important}</style>
+</body>
+</html>

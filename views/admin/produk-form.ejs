@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= produk ? 'Edit' : 'Tambah' %> Produk - Lumière Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { blushBase: '#FCF9F9', dustyPink: '#F2E8E9', softMauve: '#E8DFE0', darkPlum: '#4A3C3D', roseWood: '#B89C9D' }, fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"Poppins"', 'sans-serif'] } } }
+        }
+    </script>
+</head>
+<body class="font-sans bg-gray-50 text-darkPlum">
+
+<div class="flex min-h-screen">
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-darkPlum text-white fixed h-full flex flex-col">
+        <div class="p-8 border-b border-white/10">
+            <h1 class="font-serif text-2xl text-roseWood">LUMIÈRE</h1>
+            <p class="text-white/40 text-[10px] uppercase tracking-widest mt-1">Admin Panel</p>
+        </div>
+        <nav class="flex-1 p-4 mt-4">
+            <ul class="space-y-1">
+                <li><a href="/admin" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition text-sm">📊 Dashboard</a></li>
+                <li><a href="/admin/produk" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-roseWood/20 text-white font-medium text-sm">👗 Produk</a></li>
+                <li><a href="/admin/pesanan" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition text-sm">📦 Pesanan</a></li>
+                <li><a href="/admin/testimoni" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition text-sm">⭐ Testimoni</a></li>
+            </ul>
+        </nav>
+        <div class="p-4 border-t border-white/10">
+            <a href="/" target="_blank" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-white/10 text-white/70 hover:text-white transition text-sm">🌐 Lihat Website</a>
+            <a href="/logout" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-500/20 text-white/70 hover:text-red-300 transition text-sm mt-1">🚪 Logout</a>
+        </div>
+    </aside>
+
+    <main class="ml-64 flex-1 p-8">
+        <div class="flex items-center gap-4 mb-8">
+            <a href="/admin/produk" class="text-roseWood text-sm hover:underline">← Kembali</a>
+            <h2 class="font-serif text-3xl text-darkPlum"><%= produk ? 'Edit Produk' : 'Tambah Produk' %></h2>
+        </div>
+
+        <form action="<%= produk ? '/admin/produk/edit/' + produk._id : '/admin/produk/tambah' %>" method="POST" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+            <!-- KIRI -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-5 text-sm uppercase tracking-widest text-gray-400">Info Produk</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Nama Produk *</label>
+                            <input type="text" name="nama" required value="<%= produk ? produk.nama : '' %>"
+                                class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Deskripsi Singkat</label>
+                            <textarea name="deskripsi" rows="3"
+                                class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition"><%= produk ? produk.deskripsi : '' %></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Detail Produk (Halaman Detail)</label>
+                            <textarea name="detail" rows="4"
+                                class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition"><%= produk ? produk.detail : '' %></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-5 text-sm uppercase tracking-widest text-gray-400">Harga & Stok</h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Harga Normal (Rp) *</label>
+                            <input type="number" name="harga" required value="<%= produk ? produk.harga : '' %>"
+                                class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Harga Diskon (Rp)</label>
+                            <input type="number" name="hargaDiskon" value="<%= produk ? produk.hargaDiskon : 0 %>"
+                                class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Stok *</label>
+                            <input type="number" name="stok" required value="<%= produk ? produk.stok : 0 %>"
+                                class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-5 text-sm uppercase tracking-widest text-gray-400">Foto & Warna</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">URL Foto (pisahkan dengan koma)</label>
+                            <textarea name="foto" rows="3" placeholder="https://link-foto-1.com, https://link-foto-2.com"
+                                class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition"><%= produk ? produk.foto.join(', ') : '' %></textarea>
+                            <p class="text-xs text-gray-400 mt-1">Gunakan link dari Google Drive, Imgur, atau hosting foto lainnya</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Pilihan Warna (pisahkan dengan koma)</label>
+                            <input type="text" name="warna" placeholder="Hitam, Putih, Navy, Cream"
+                                value="<%= produk ? produk.warna.join(', ') : '' %>"
+                                class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KANAN -->
+            <div class="space-y-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-5 text-sm uppercase tracking-widest text-gray-400">Kategori</h3>
+                    <select name="kategori" class="w-full border border-softMauve rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-roseWood transition">
+                        <% ['Segiempat','Pashmina','Instan','Bergo','Lainnya'].forEach(k => { %>
+                        <option value="<%= k %>" <%= produk && produk.kategori === k ? 'selected' : '' %>><%= k %></option>
+                        <% }) %>
+                    </select>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-5 text-sm uppercase tracking-widest text-gray-400">Pengaturan</h3>
+                    <div class="space-y-4">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" name="unggulan" <%= produk && produk.unggulan ? 'checked' : '' %>
+                                class="w-4 h-4 accent-roseWood">
+                            <div>
+                                <p class="text-sm font-medium">Produk Unggulan</p>
+                                <p class="text-xs text-gray-400">Tampil di halaman beranda</p>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" name="aktif" <%= !produk || produk.aktif ? 'checked' : '' %>
+                                class="w-4 h-4 accent-roseWood">
+                            <div>
+                                <p class="text-sm font-medium">Produk Aktif</p>
+                                <p class="text-xs text-gray-400">Tampil di katalog publik</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <% if (produk && produk.foto && produk.foto[0]) { %>
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-softMauve/50">
+                    <h3 class="font-medium mb-4 text-sm uppercase tracking-widest text-gray-400">Preview Foto</h3>
+                    <img src="<%= produk.foto[0] %>" class="w-full rounded-lg object-cover aspect-square">
+                </div>
+                <% } %>
+
+                <button type="submit" class="w-full bg-darkPlum text-white py-4 rounded-lg font-medium hover:bg-roseWood transition text-sm uppercase tracking-widest">
+                    <%= produk ? 'Simpan Perubahan' : 'Tambah Produk' %>
+                </button>
+                <a href="/admin/produk" class="block w-full text-center border border-softMauve py-4 rounded-lg text-sm text-gray-500 hover:bg-blushBase transition">Batal</a>
+            </div>
+        </form>
+    </main>
+</div>
+
+</body>
+</html>

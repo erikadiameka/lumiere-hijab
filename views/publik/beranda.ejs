@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumière Hijab | Premium & Elegant Fashion</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/font/lucide.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blushBase: '#FCF9F9',
+                        dustyPink: '#F2E8E9',
+                        softMauve: '#E8DFE0',
+                        darkPlum: '#4A3C3D',
+                        roseWood: '#B89C9D'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        [x-cloak] { display: none !important; }
+        html { scroll-behavior: smooth; }
+        .glass-nav { background: rgba(252, 249, 249, 0.85); backdrop-filter: blur(12px); }
+        .product-card:hover .product-action { transform: translateY(0); }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+    </style>
+</head>
+<body x-data="{ cartOpen: false, mobileMenu: false }" class="font-sans bg-blushBase text-darkPlum antialiased selection:bg-roseWood selection:text-white">
+
+   <!-- NAVBAR -->
+<nav class="fixed w-full z-[60] glass-nav border-b border-roseWood/10 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12">
+        <div class="flex justify-between items-center h-20">
+
+            <!-- HAMBURGER -->
+            <div class="flex items-center lg:hidden">
+                <button @click="mobileMenu = !mobileMenu" class="text-darkPlum p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <line x1="3" y1="12" x2="21" y2="12"/>
+                        <line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- LOGO -->
+            <a href="/" class="flex-shrink-0 flex items-center cursor-pointer">
+                <h1 class="font-serif text-2xl font-semibold tracking-tighter text-darkPlum">LUMIÈRE</h1>
+            </a>
+
+            <!-- MENU DESKTOP -->
+            <div class="hidden lg:flex space-x-10 items-center">
+                <a href="/katalog" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition duration-300">Shop All</a>
+                <a href="/katalog?kategori=Pashmina" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition duration-300">New Arrivals</a>
+                <a href="/tentang" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition duration-300">Our Story</a>
+                <a href="/kontak" class="text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition duration-300">Kontak</a>
+            </div>
+
+            <!-- ICON KANAN -->
+            <div class="flex items-center space-x-6">
+                <!-- SEARCH -->
+                <a href="/katalog" class="hidden sm:block hover:text-roseWood transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                </a>
+                <!-- KERANJANG -->
+                <a href="/keranjang" class="hover:text-roseWood transition relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 01-8 0"/>
+                    </svg>
+                </a>
+                <!-- LOGIN ADMIN -->
+                <a href="/login" class="hidden sm:block text-[11px] uppercase tracking-[0.2em] font-medium hover:text-roseWood transition duration-300">
+                    Login
+                </a>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div x-show="mobileMenu" x-cloak class="fixed inset-0 z-[100] overflow-hidden">
+    <div class="absolute inset-0 bg-darkPlum/40 backdrop-blur-sm" @click="mobileMenu = false"></div>
+    <div class="absolute inset-y-0 left-0 max-w-xs w-full bg-blushBase p-8 shadow-2xl">
+        <div class="flex justify-between items-center mb-12">
+            <h2 class="font-serif text-xl">Menu</h2>
+            <!-- TOMBOL X -->
+            <button @click="mobileMenu = false" class="p-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+        <div class="flex flex-col space-y-6">
+            <a href="/katalog" class="text-lg font-light border-b border-softMauve pb-2">Katalog Produk</a>
+            <a href="/katalog?kategori=Pashmina" class="text-lg font-light border-b border-softMauve pb-2">New Arrivals</a>
+            <a href="/tentang" class="text-lg font-light border-b border-softMauve pb-2">Tentang Kami</a>
+            <a href="/kontak" class="text-lg font-light border-b border-softMauve pb-2">Kontak</a>
+            <a href="/keranjang" class="text-lg font-light border-b border-softMauve pb-2">🛒 Keranjang</a>
+            <!-- LOGIN ADMIN MOBILE -->
+            <a href="/login" class="text-lg font-light border-b border-softMauve pb-2">🔐 Login Admin</a>
+        </div>
+    </div>
+</div>
+
+    <!-- HERO -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-[500px] h-[500px] bg-dustyPink rounded-full opacity-40 blur-3xl"></div>
+        <div class="absolute -bottom-24 -left-24 w-[400px] h-[400px] bg-softMauve rounded-full opacity-30 blur-3xl"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div class="text-left">
+                <span class="inline-block text-[10px] uppercase tracking-[0.4em] text-roseWood mb-4 font-semibold">New Collection 2025</span>
+                <h2 class="font-serif text-5xl md:text-7xl mb-8 text-darkPlum leading-[1.1]">Elegance in <br><span class="italic text-roseWood">Every Layer</span></h2>
+                <p class="text-gray-500 mb-10 font-light leading-relaxed max-w-md">Koleksi hijab dengan material premium dan palet warna bumi yang lembut. Dirancang untuk menonjolkan kecantikan alami Anda.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="/katalog" class="bg-darkPlum text-blushBase px-10 py-4 uppercase tracking-[0.2em] text-[11px] font-medium hover:bg-roseWood transition-all duration-500 hover:shadow-2xl">Belanja Sekarang</a>
+                    <a href="/tentang" class="border border-darkPlum/20 px-10 py-4 uppercase tracking-[0.2em] text-[11px] font-medium hover:bg-darkPlum hover:text-white transition-all duration-500">Our Story</a>
+                </div>
+            </div>
+           <div class="hidden lg:block relative">
+    <div class="w-[450px] h-[600px] rounded-t-full mx-auto relative overflow-hidden animate-float border-[12px] border-white shadow-2xl">
+        <img src="https://png.pngtree.com/png-clipart/20220430/original/pngtree-muslimah-woman-silhouette-wearing-hijab-logo-png-image_7595917.png" 
+            class="absolute inset-0 w-full h-full object-cover">
+    </div>
+    <div class="absolute bottom-10 right-0 bg-white p-6 shadow-xl rounded-lg max-w-[180px]">
+        <p class="text-[10px] text-gray-400 uppercase mb-1">Bahan Premium</p>
+        <p class="text-xs font-medium italic">"Sentuhan sutra yang sangat lembut di kulit."</p>
+    </div>
+</div>
+        </div>
+    </section>
+
+    <!-- KATEGORI -->
+    <section class="py-24 bg-white/50">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-8">
+            <% [
+                { 
+                    nama: 'Pashmina Series', 
+                    kat: 'Pashmina', 
+                    foto: 'https://elizabeth.co.id/wp-content/uploads/2025/04/5180-0567-87_2.png'
+                },
+                { 
+                    nama: 'Segi Empat', 
+                    kat: 'Segiempat', 
+                    foto: 'https://biabyzaskiamecca.com/cdn/shop/files/CLEORA_ECRU_-_BIA_HIJAB.jpg?v=1751516096&width=1080'
+                },
+                { 
+                    nama: 'Bergo Instan', 
+                    kat: 'Instan', 
+                    foto: 'https://images.tokopedia.net/img/cache/700/aphluv/1997/1/1/19b4dd6d0961463a85de95ca74f51434~.jpeg.webp'
+                },
+                { 
+                    nama: 'Limited Edition', 
+                    kat: 'Bergo', 
+                    foto: 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/100/MTA-154724158/brd-46010_bergo-hamidah-jersey-size-m-jilbab-sport_full01-160c9ee8.jpg'
+                }
+            ].forEach(k => { %>
+            <a href="/katalog?kategori=<%= k.kat %>" class="group cursor-pointer">
+                <div class="aspect-[4/5] mb-4 overflow-hidden relative">
+                    <img src="<%= k.foto %>" 
+                        class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                    <div class="absolute inset-0 bg-darkPlum/20 group-hover:bg-darkPlum/10 transition duration-700"></div>
+                </div>
+                <h5 class="text-center text-[10px] uppercase tracking-widest font-semibold"><%= k.nama %></h5>
+            </a>
+            <% }) %>
+        </div>
+    </div>
+</section>
+
+    <!-- PRODUK UNGGULAN -->
+    <section id="shop" class="py-24 max-w-7xl mx-auto px-6">
+        <div class="flex justify-between items-end mb-16">
+            <div>
+                <h3 class="font-serif text-4xl text-darkPlum">Koleksi Pilihan</h3>
+                <p class="text-gray-400 mt-2">Terlaris musim ini</p>
+            </div>
+            <a href="/katalog" class="text-[11px] uppercase tracking-widest border-b border-roseWood pb-1 text-roseWood font-semibold hover:text-darkPlum hover:border-darkPlum transition">Lihat Semua</a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+            <% if (produkUnggulan.length === 0) { %>
+                <div class="col-span-full text-center py-10 italic text-gray-400">Belum ada koleksi yang tersedia.</div>
+            <% } %>
+            <% produkUnggulan.forEach(item => { %>
+            <div class="group product-card">
+                <a href="/produk/<%= item._id %>">
+                    <div class="relative aspect-[3/4] bg-dustyPink mb-6 overflow-hidden">
+                        <% if (item.foto && item.foto[0]) { %>
+                            <img src="<%= item.foto[0] %>" alt="<%= item.nama %>" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                        <% } else { %>
+                            <div class="absolute inset-0 flex items-center justify-center text-roseWood/40 italic text-center p-4 font-serif"><%= item.nama %></div>
+                        <% } %>
+                        <div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 z-10 product-action">
+                            <a href="/produk/<%= item._id %>" class="block w-full bg-white text-darkPlum py-3 text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-darkPlum hover:text-white transition shadow-lg text-center">
+                                Lihat Detail
+                            </a>
+                        </div>
+                        <% if (item.hargaDiskon > 0) { %>
+                        <div class="absolute top-3 left-3 bg-roseWood text-white text-[9px] px-2 py-1 uppercase tracking-wider">Sale</div>
+                        <% } %>
+                    </div>
+                </a>
+                <div class="text-center">
+                    <h4 class="text-sm font-medium mb-2 group-hover:text-roseWood transition"><%= item.nama %></h4>
+                    <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-2"><%= item.kategori %></p>
+                    <% if (item.hargaDiskon > 0) { %>
+                        <p class="text-gray-400 line-through text-xs">Rp <%= item.harga.toLocaleString('id-ID') %></p>
+                        <p class="text-roseWood font-medium text-sm">Rp <%= item.hargaDiskon.toLocaleString('id-ID') %></p>
+                    <% } else { %>
+                        <p class="text-roseWood font-medium text-sm">Rp <%= item.harga.toLocaleString('id-ID') %></p>
+                    <% } %>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </section>
+
+    <!-- KEUNGGULAN -->
+    <section class="py-24 bg-dustyPink/30">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="font-serif text-4xl text-darkPlum">Mengapa Lumière?</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <% [
+                    { icon: '🌟', judul: 'Kualitas Premium', deskripsi: 'Bahan pilihan yang nyaman dipakai seharian penuh' },
+                    { icon: '🚚', judul: 'Pengiriman Cepat', deskripsi: 'Tersedia berbagai kurir terpercaya ke seluruh Indonesia' },
+                    { icon: '💎', judul: 'Desain Elegan', deskripsi: 'Koleksi modern yang mengikuti tren fashion terkini' },
+                    { icon: '🔄', judul: 'Garansi Return', deskripsi: 'Pengembalian barang mudah jika tidak sesuai' }
+                ].forEach(f => { %>
+                <div class="text-center p-8 bg-white rounded-2xl shadow-sm hover:-translate-y-1 transition duration-300">
+                    <div class="text-4xl mb-4"><%= f.icon %></div>
+                    <h4 class="font-serif text-lg mb-3 text-darkPlum"><%= f.judul %></h4>
+                    <p class="text-gray-400 text-sm font-light leading-relaxed"><%= f.deskripsi %></p>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONI -->
+    <% if (testimoni.length > 0) { %>
+    <section class="py-24 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h3 class="font-serif text-4xl text-darkPlum">Kata Pelanggan Kami</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <% testimoni.forEach(t => { %>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-softMauve/50">
+                <div class="text-roseWood mb-4 text-sm">
+                    <% for(let i=0; i<t.rating; i++) { %>★<% } %>
+                </div>
+                <p class="text-gray-500 italic leading-relaxed mb-6 font-light">"<%= t.pesan %>"</p>
+                <div>
+                    <p class="font-semibold text-darkPlum text-sm"><%= t.namaPelanggan %></p>
+                    <% if (t.produk) { %>
+                    <p class="text-[10px] uppercase tracking-widest text-roseWood mt-1"><%= t.produk %></p>
+                    <% } %>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </section>
+    <% } %>
+
+    <!-- WHATSAPP BUTTON -->
+    <a href="https://wa.me/6281234567890" target="_blank" class="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition transform duration-300">
+        <i class="lucide-message-circle w-6 h-6"></i>
+    </a>
+
+    <!-- FOOTER -->
+    <footer class="bg-darkPlum text-blushBase pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+            <div class="col-span-1">
+                <h1 class="font-serif text-3xl mb-8 tracking-tighter">LUMIÈRE</h1>
+                <p class="text-softMauve/60 text-sm font-light leading-relaxed">Membawa keanggunan dalam setiap helai kain. Kami percaya bahwa kualitas adalah prioritas tertinggi dalam fashion muslimah modern.</p>
+                <div class="flex space-x-5 mt-8 text-softMauve/80">
+                    <a href="#" class="hover:text-roseWood"><i class="lucide-instagram w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-roseWood"><i class="lucide-facebook w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-roseWood"><i class="lucide-music-2 w-5 h-5"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold text-roseWood mb-8">Koleksi</h4>
+                <ul class="space-y-4 text-sm font-light text-softMauve/70">
+                    <li><a href="/katalog?kategori=Pashmina" class="hover:text-white transition">Hijab Pashmina</a></li>
+                    <li><a href="/katalog?kategori=Segiempat" class="hover:text-white transition">Segi Empat</a></li>
+                    <li><a href="/katalog?kategori=Instan" class="hover:text-white transition">Bergo Instan</a></li>
+                    <li><a href="/katalog?kategori=Bergo" class="hover:text-white transition">Bergo Premium</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold text-roseWood mb-8">Informasi</h4>
+                <ul class="space-y-4 text-sm font-light text-softMauve/70">
+                    <li><a href="/keranjang" class="hover:text-white transition">Keranjang</a></li>
+                    <li><a href="/kontak" class="hover:text-white transition">Kebijakan Pengembalian</a></li>
+                    <li><a href="/kontak" class="hover:text-white transition">Syarat & Ketentuan</a></li>
+                    <li><a href="/kontak" class="hover:text-white transition">Hubungi Kami</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-[10px] uppercase tracking-[0.3em] font-bold text-roseWood mb-8">Newsletter</h4>
+                <p class="text-sm font-light text-softMauve/70 mb-6">Dapatkan tips styling dan promo eksklusif.</p>
+                <div class="relative">
+                    <input type="email" placeholder="Email Anda" class="w-full bg-transparent border-b border-softMauve/30 py-3 text-sm focus:outline-none focus:border-roseWood transition">
+                    <button class="absolute right-0 top-3 text-roseWood"><i class="lucide-arrow-right w-5 h-5"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-widest text-softMauve/40">
+            <p>&copy; 2025 Lumière Hijab Indonesia. Crafted for Elegance.</p>
+            <div class="flex space-x-8 mt-6 md:mt-0">
+                <a href="/kontak" class="hover:text-softMauve/80 transition">Privacy Policy</a>
+                <a href="/kontak" class="hover:text-softMauve/80 transition">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
