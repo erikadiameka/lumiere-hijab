@@ -1,13 +1,14 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const bcrypt = require("bcrypt");
 const Product = require("./Product");
 const Order = require("./order");
 const Testimonial = require("./Testimonial");
 const app = express();
 
-const uri =
-  "mongodb+srv://teskonek:aman123@cluster0.ozr8ow3.mongodb.net/lumiere_db?retryWrites=true&w=majority";
+const uri = process.env.MONGODB_URI;
 
 // 1. SETTING UTAMA
 app.set("view engine", "ejs");
