@@ -206,12 +206,15 @@ app.get("/kontak", (req, res) => {
 // =====================
 
 app.get("/login", (req, res) => {
-  res.render("login");
+  res.render("login", { error: null });
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { username, password } = req.body;
-  if (username === "admin" && password === "12345") {
+  const validUsername = username === process.env.ADMIN_USERNAME;
+  const validPassword = password === process.env.ADMIN_PASSWORD;
+
+  if (validUsername && validPassword) {
     req.session.admin = true;
     res.redirect("/admin");
   } else {
